@@ -1,5 +1,3 @@
-//var w = require('./')(new (window.AudioContext || window.webkitAudioContext)())
-
 module.exports = function run (w, step) {
   var toFreq = require('notes-to-frequencies')
 
@@ -26,17 +24,18 @@ module.exports = function run (w, step) {
     w.osc({type: 'sawtooth', noteOn: noteOn}),
     w.osc({type: 'sawtooth', detune: -7, noteOn: noteOn}),
     w.filter({
-      type:'lowpass', Q: 5,
-      frequency: 1000,
+      type:'lowpass', Q: 15,
+//      frequency: 500,
       noteOn: function (freq, time) {
-        decay(this.frequency, time, freq*10, freq, 0.5)
+        decay(this.frequency, time, freq*5, freq*2, 1.8)
       }
     }),
     w.gain({
       noteOn: function (_, time) {
-        decay(this.gain,  time, 10, 0.001, 0.5)
+        decay(this.gain,  time, 5, 0.001, 1)
       }
-    })
+    }),
+    w.reverb({dry: 1, wet: 0.8, time: 0.5})
   )
 
 //  c.connect(w.context.destination)
@@ -88,17 +87,17 @@ var g =      w.gain({gain: 1,
   noteOn: function (_, time) {
     Sequencer(notes, time, c)
     Sequencer(beats, time, d)
-//    var N = 16
-//    for(var i = 0; i < N; i++) {
-//      if(i%2) e.noteOn(1600, time+bar*2 + (i/N)*2 + 1/N/8)
-//      else e.noteOn(1600, time+bar*2 + (i/N)*2)
-//    }
+    var N = 16
+    for(var i = 0; i < N; i++) {
+      if(i%2) e.noteOn(1600, time+bar*2 + (i/N)*2 + 1/N/8)
+      else e.noteOn(1600, time+bar*2 + (i/N)*2)
+    }
   }
 })
 
 w(c, g)
 w(d, g)
-//w(e, g)
+w(e, g)
 
   c.start()
   d.start()
@@ -126,6 +125,10 @@ w(d, g)
   }
 
 }
+
+
+
+
 
 
 

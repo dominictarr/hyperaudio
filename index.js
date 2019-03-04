@@ -1,3 +1,4 @@
+var Reverb = require('soundbank-reverb')
 /*
   oscilator
   filter
@@ -71,8 +72,12 @@ var A = module.exports = function (ctx) {
   w.gain = _setup(ctx.createGain)
   w.filter = _setup(ctx.createBiquadFilter)
 
+  w.reverb = function (opts) {
+    return setup(Reverb(ctx), opts)
+  }
 
   w.context = ctx
   return w
 }
+
 

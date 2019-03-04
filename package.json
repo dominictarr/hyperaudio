@@ -8,7 +8,8 @@
     "url": "git://github.com/dominictarr/hyperaudio.git"
   },
   "dependencies": {
-    "notes-to-frequencies": "^1.0.0"
+    "notes-to-frequencies": "^1.0.0",
+    "soundbank-reverb": "^1.1.2"
   },
   "devDependencies": {},
   "scripts": {
